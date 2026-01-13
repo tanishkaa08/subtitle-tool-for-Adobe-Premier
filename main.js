@@ -52,6 +52,23 @@ function safeGetSystemPath(pathType) {
     }
 }
 
+// Helper function to normalize paths for cross-platform compatibility
+function normalizePath(path) {
+    if (!path) return path;
+    // Convert backslashes to forward slashes for consistency
+    return path.replace(/\\/g, '/');
+}
+
+// Helper function to get file name from path (cross-platform)
+function getFileName(path) {
+    if (!path) return '';
+    // Normalize path first
+    var normalizedPath = normalizePath(path);
+    // Get the last part after the final separator
+    var parts = normalizedPath.split('/');
+    return parts[parts.length - 1];
+}
+
 // Track if scripts are loaded
 var colorScriptLoaded = false;
 var staticScriptLoaded = false;
@@ -339,7 +356,7 @@ if (setSrtFileElement) {
                 
                 var srtStatusElement = document.getElementById("srtStatus");
                 if (srtStatusElement) {
-                    srtStatusElement.textContent = "Selected: " + srtPath.split(/\\\\|\//).pop();
+                    srtStatusElement.textContent = "Selected: " + getFileName(srtPath);
                     console.log("Updated SRT status display");
                 } else {
                     console.log("ERROR: srtStatus element not found");
@@ -367,7 +384,7 @@ if (setMogrtElement) {
                 if (mogrtPath) {
                     var whiteMogrtStatusElement = document.getElementById("whiteMogrtStatus");
                     if (whiteMogrtStatusElement) {
-                        whiteMogrtStatusElement.textContent = "Selected: " + mogrtPath.split(/\\\\|\//).pop();
+                        whiteMogrtStatusElement.textContent = "Selected: " + getFileName(mogrtPath);
                     }
                     selectedMogrtFile = { path: mogrtPath };
                     console.log("White MOGRT selected: " + mogrtPath);
@@ -389,7 +406,7 @@ if (setMogrt2Element) {
                 if (mogrtPath) {
                     var greenMogrtStatusElement = document.getElementById("greenMogrtStatus");
                     if (greenMogrtStatusElement) {
-                        greenMogrtStatusElement.textContent = "Selected: " + mogrtPath.split(/\\\\|\//).pop();
+                        greenMogrtStatusElement.textContent = "Selected: " + getFileName(mogrtPath);
                     }
                     selectedMogrtFile2 = { path: mogrtPath };
                     console.log("Green MOGRT selected: " + mogrtPath);
@@ -411,7 +428,7 @@ if (setSrtFileAnimatedElement) {
                 if (srtPath) {
                     var srtStatusAnimatedElement = document.getElementById("srtStatusAnimated");
                     if (srtStatusAnimatedElement) {
-                        srtStatusAnimatedElement.textContent = "Selected: " + srtPath.split(/\\\\|\//).pop();
+                        srtStatusAnimatedElement.textContent = "Selected: " + getFileName(srtPath);
                     }
                     console.log("Animated SRT file selected: " + srtPath);
                     
@@ -435,7 +452,7 @@ if (setAnimatedMogrtElement) {
                 if (mogrtPath) {
                     var animatedMogrtStatusElement = document.getElementById("animatedMogrtStatus");
                     if (animatedMogrtStatusElement) {
-                        animatedMogrtStatusElement.textContent = "Selected: " + mogrtPath.split(/\\\\|\//).pop();
+                        animatedMogrtStatusElement.textContent = "Selected: " + getFileName(mogrtPath);
                     }
                     selectedAnimatedMogrtFile = { path: mogrtPath };
                     console.log("Animated MOGRT selected: " + mogrtPath);
@@ -460,7 +477,7 @@ if (setTextFileElement) {
                 if (textPath) {
                     var textFileStatusElement = document.getElementById("textFileStatus");
                     if (textFileStatusElement) {
-                        textFileStatusElement.textContent = "Selected: " + textPath.split(/\\\\|\//).pop();
+                        textFileStatusElement.textContent = "Selected: " + getFileName(textPath);
                     }
                     console.log("Text file selected: " + textPath);
                     
@@ -499,7 +516,7 @@ if (setManualWhiteMogrtElement) {
                 if (mogrtPath) {
                     var manualWhiteMogrtStatusElement = document.getElementById("manualWhiteMogrtStatus");
                     if (manualWhiteMogrtStatusElement) {
-                        manualWhiteMogrtStatusElement.textContent = "Selected: " + mogrtPath.split(/\\\\|\//).pop();
+                        manualWhiteMogrtStatusElement.textContent = "Selected: " + getFileName(mogrtPath);
                     }
                     console.log("Manual White MOGRT selected: " + mogrtPath);
                     
@@ -523,7 +540,7 @@ if (setManualGreenMogrtElement) {
                 if (mogrtPath) {
                     var manualGreenMogrtStatusElement = document.getElementById("manualGreenMogrtStatus");
                     if (manualGreenMogrtStatusElement) {
-                        manualGreenMogrtStatusElement.textContent = "Selected: " + mogrtPath.split(/\\\\|\//).pop();
+                        manualGreenMogrtStatusElement.textContent = "Selected: " + getFileName(mogrtPath);
                     }
                     console.log("Manual Green MOGRT selected: " + mogrtPath);
                     
@@ -644,7 +661,7 @@ if (setTransliterationSrtElement) {
                     if (srtPath) {
                         var transliterationSrtStatusElement = document.getElementById("transliterationSrtStatus");
                         if (transliterationSrtStatusElement) {
-                            transliterationSrtStatusElement.textContent = "Selected: " + srtPath.split(/\\\\|\//).pop();
+                            transliterationSrtStatusElement.textContent = "Selected: " + getFileName(srtPath);
                         }
                         selectedTransliterationSrtFile = { path: srtPath };
                         console.log("Transliteration SRT selected: " + srtPath);
@@ -668,7 +685,7 @@ if (setTranscriptionSrtElement) {
                     if (srtPath) {
                         var transcriptionSrtStatusElement = document.getElementById("transcriptionSrtStatus");
                         if (transcriptionSrtStatusElement) {
-                            transcriptionSrtStatusElement.textContent = "Selected: " + srtPath.split(/\\\\|\//).pop();
+                            transcriptionSrtStatusElement.textContent = "Selected: " + getFileName(srtPath);
                         }
                         selectedTranscriptionSrtFile = { path: srtPath };
                         console.log("Transcription SRT selected: " + srtPath);
@@ -692,7 +709,7 @@ if (setTransliterationGreenMogrtElement) {
                     if (mogrtPath) {
                         var transliterationGreenMogrtStatusElement = document.getElementById("transliterationGreenMogrtStatus");
                         if (transliterationGreenMogrtStatusElement) {
-                            transliterationGreenMogrtStatusElement.textContent = "Selected: " + mogrtPath.split(/\\\\|\//).pop();
+                            transliterationGreenMogrtStatusElement.textContent = "Selected: " + getFileName(mogrtPath);
                         }
                         selectedTransliterationGreenMogrtFile = { path: mogrtPath };
                         console.log("Transliteration Green MOGRT selected: " + mogrtPath);
@@ -716,7 +733,7 @@ if (setTransliterationWhiteMogrtElement) {
                     if (mogrtPath) {
                         var transliterationWhiteMogrtStatusElement = document.getElementById("transliterationWhiteMogrtStatus");
                         if (transliterationWhiteMogrtStatusElement) {
-                            transliterationWhiteMogrtStatusElement.textContent = "Selected: " + mogrtPath.split(/\\\\|\//).pop();
+                            transliterationWhiteMogrtStatusElement.textContent = "Selected: " + getFileName(mogrtPath);
                         }
                         selectedTransliterationWhiteMogrtFile = { path: mogrtPath };
                         console.log("Transliteration White MOGRT selected: " + mogrtPath);
@@ -740,7 +757,7 @@ if (setTranscriptionMogrtElement) {
                     if (mogrtPath) {
                         var transcriptionMogrtStatusElement = document.getElementById("transcriptionMogrtStatus");
                         if (transcriptionMogrtStatusElement) {
-                            transcriptionMogrtStatusElement.textContent = "Selected: " + mogrtPath.split(/\\\\|\//).pop();
+                            transcriptionMogrtStatusElement.textContent = "Selected: " + getFileName(mogrtPath);
                         }
                         selectedTranscriptionMogrtFile = { path: mogrtPath };
                         console.log("Transcription MOGRT selected: " + mogrtPath);
@@ -764,7 +781,7 @@ if (setTransliterationAnimatedMogrtElement) {
                     if (mogrtPath) {
                         var transliterationAnimatedMogrtStatusElement = document.getElementById("transliterationAnimatedMogrtStatus");
                         if (transliterationAnimatedMogrtStatusElement) {
-                            transliterationAnimatedMogrtStatusElement.textContent = "Selected: " + mogrtPath.split(/\\\\|\//).pop();
+                            transliterationAnimatedMogrtStatusElement.textContent = "Selected: " + getFileName(mogrtPath);
                         }
                         selectedTransliterationAnimatedMogrtFile = { path: mogrtPath };
                         console.log("Transliteration Animated MOGRT selected: " + mogrtPath);
@@ -1173,7 +1190,7 @@ if (setTransliterationTextFileElement) {
                     if (textPath) {
                         var transliterationTextFileStatusElement = document.getElementById("transliterationTextFileStatus");
                         if (transliterationTextFileStatusElement) {
-                            transliterationTextFileStatusElement.textContent = "Selected: " + textPath.split(/\\\\|\//).pop();
+                            transliterationTextFileStatusElement.textContent = "Selected: " + getFileName(textPath);
                         }
                         selectedTransliterationTextFile = { path: textPath };
                         console.log("Transliteration text file selected: " + textPath);
@@ -1218,7 +1235,7 @@ if (setTransliterationManualGreenMogrtElement) {
                     if (mogrtPath) {
                         var transliterationManualGreenMogrtStatusElement = document.getElementById("transliterationManualGreenMogrtStatus");
                         if (transliterationManualGreenMogrtStatusElement) {
-                            transliterationManualGreenMogrtStatusElement.textContent = "Selected: " + mogrtPath.split(/\\\\|\//).pop();
+                            transliterationManualGreenMogrtStatusElement.textContent = "Selected: " + getFileName(mogrtPath);
                         }
                         selectedTransliterationGreenMogrtFile = { path: mogrtPath };
                         console.log("Transliteration Manual Green MOGRT selected: " + mogrtPath);
@@ -1243,7 +1260,7 @@ if (setTransliterationManualWhiteMogrtElement) {
                     if (mogrtPath) {
                         var transliterationManualWhiteMogrtStatusElement = document.getElementById("transliterationManualWhiteMogrtStatus");
                         if (transliterationManualWhiteMogrtStatusElement) {
-                            transliterationManualWhiteMogrtStatusElement.textContent = "Selected: " + mogrtPath.split(/\\\\|\//).pop();
+                            transliterationManualWhiteMogrtStatusElement.textContent = "Selected: " + getFileName(mogrtPath);
                         }
                         selectedTransliterationWhiteMogrtFile = { path: mogrtPath };
                         console.log("Transliteration Manual White MOGRT selected: " + mogrtPath);
@@ -1268,7 +1285,7 @@ if (setTransliterationManualTranscriptionMogrtElement) {
                     if (mogrtPath) {
                         var transliterationManualTranscriptionMogrtStatusElement = document.getElementById("transliterationManualTranscriptionMogrtStatus");
                         if (transliterationManualTranscriptionMogrtStatusElement) {
-                            transliterationManualTranscriptionMogrtStatusElement.textContent = "Selected: " + mogrtPath.split(/\\\\|\//).pop();
+                            transliterationManualTranscriptionMogrtStatusElement.textContent = "Selected: " + getFileName(mogrtPath);
                         }
                         selectedTranscriptionMogrtFile = { path: mogrtPath };
                         console.log("Transliteration Manual Transcription MOGRT selected: " + mogrtPath);

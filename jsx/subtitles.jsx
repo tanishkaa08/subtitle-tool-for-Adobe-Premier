@@ -286,6 +286,15 @@ function formatTime(t) {
     return pad(h,2) + ":" + pad(m,2) + ":" + pad(s,2) + "," + pad(ms,3);
 }
 
+// Helper function for cross-platform path joining
+function joinPath(folder, fileName) {
+    var folderPath = folder.fsName || folder.toString();
+    var separator = ($.os.indexOf("Windows") !== -1) ? "\\" : "/";
+    // Normalize the path separator
+    folderPath = folderPath.replace(/\\/g, "/").replace(/\/+$/, "");
+    return folderPath + separator + fileName;
+}
+
 function autoCreateCaptionTrackFromSubtitles() {
     try {
         if (subtitleLines.length === 0) {
@@ -304,7 +313,7 @@ function autoCreateCaptionTrackFromSubtitles() {
         }
         
         var uniqueName = "temp_subtitles_" + (new Date().getTime()) + ".srt";
-        var tempFile = new File(Folder.desktop.fsName + '/' + uniqueName);
+        var tempFile = new File(joinPath(Folder.desktop, uniqueName));
         tempFile.encoding = "UTF8";
         if (!tempFile.open("w")) {
             alert("Failed to open temp SRT file for writing.");
@@ -347,7 +356,7 @@ function saveSubtitleState() {
         currentIndex: currentIndex,
         mode: 'static'
     };
-    var file = new File(Folder.userData.fsName + "/static_subtitle_tool_state.json");
+    var file = new File(joinPath(Folder.userData, "static_subtitle_tool_state.json"));
     file.encoding = "UTF-8";
     if (file.open("w")) {
         file.write(JSON.stringify(state));
@@ -356,7 +365,7 @@ function saveSubtitleState() {
 }
 
 function loadSubtitleState() {
-    var file = new File(Folder.userData.fsName + "/static_subtitle_tool_state.json");
+    var file = new File(joinPath(Folder.userData, "static_subtitle_tool_state.json"));
     if (file.exists) {
         file.encoding = "UTF-8";
         if (file.open("r")) {
@@ -370,6 +379,6 @@ function loadSubtitleState() {
 }
 
 function clearSubtitleState() {
-    var file = new File(Folder.userData.fsName + "/static_subtitle_tool_state.json");
+    var file = new File(joinPath(Folder.userData, "static_subtitle_tool_state.json"));
     if (file.exists) file.remove();
 }

@@ -2,7 +2,16 @@ var subtitleLines = [];
 var currentIndex = 0;
 var subtitleMode = 'color'; 
 var mogrtClips = [];
-var selectedVideoTrack = 1; 
+var selectedVideoTrack = 1;
+
+// Helper function for cross-platform path joining
+function joinPath(folder, fileName) {
+    var folderPath = folder.fsName || folder.toString();
+    var separator = ($.os.indexOf("Windows") !== -1) ? "\\" : "/";
+    // Normalize the path separator
+    folderPath = folderPath.replace(/\\/g, "/").replace(/\/+$/, "");
+    return folderPath + separator + fileName;
+} 
 
 
 var selectedSrtPath = null; 

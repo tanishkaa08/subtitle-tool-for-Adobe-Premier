@@ -13,6 +13,15 @@ var transliterationManualTimingPoints = [];
 var transliterationCurrentTextLineIndex = 0; 
 var transliterationTextFileLines = [];
 
+// Helper function for cross-platform path joining
+function joinPath(folder, fileName) {
+    var folderPath = folder.fsName || folder.toString();
+    var separator = ($.os.indexOf("Windows") !== -1) ? "\\" : "/";
+    // Normalize the path separator
+    folderPath = folderPath.replace(/\\/g, "/").replace(/\/+$/, "");
+    return folderPath + separator + fileName;
+}
+
 
 function setSubtitleMode(mode) {
     $.writeln("Subtitle mode set to: " + mode);
